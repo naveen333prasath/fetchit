@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- USED FOR MAKING SEARCH ICON IN THE SEARCH BAR -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="index.css"/>
+<title>Country Mania</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+<style>
+ 
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Style the header */
+header {
+  background-color: #2293ef;
+  padding: 0px;
+  text-align: center;
+  font-size: 35px;
+  color: white;
+  
+}
+
+/* Create two columns/boxes that floats next to each other */
+
+
+
+
+/* Style the footer */
+footer {
+  background-color: #7594F7;
+  padding: 220px;
+  text-align: bottom;
+  color: white;
+}
+
+/* Responsive layout - makes the two columns/boxes stack on top of each other instead of next to each other, on small screens */
+
+
+    .card {
+      box-shadow: 0 6px 10px 0 rgba(0,0,0,0.2);
+      transition: 0.3s;
+      margin: 15%;
+      margin-left: 30%;
+      width: 40%;
+      border-radius: 5px;
+      position: absolute;
+      bottom: 10px;
+    }
+    
+    .card:hover {
+      box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    }
+    
+    img {
+      border-radius: 6px 6px 0 0;
+    }
+    
+    .container {
+      padding: 2px 16px;
+      
+    }
+    </style>
+<body onload="onLoad()">    
+    <header>
+        
+        <h2>Freshfetch</h2>
+      </header>
+      
+    <div class="wrap">
+        <div class="search">
+          
+        
+            <input type="text" id= "searchKeyword" class="searchTerm" placeholder="Which country are you looking for?"></input>
+            <button type="submit" class="searchButton"  onclick="validateInput()">
+                <i class="fa fa-search"></i>
+            
+            </button>
+          
+               </div>
+             </div>
+             
+<footer>
+    
+  </footer>
+            
+             <div class="card" id = "countryCard">
+                <img alt="Avatar" style="width:100%" id="countryFlag" onclick="window.location.href = 'description.html';">
+                <div class="container" onclick="window.location.href = 'description.html';">
+                 <center><p id ="cardName"></p></center>  
+                </div>
+              </div>
+
+             <script>
+               function onLoad() {
+                 document.getElementById("searchKeyword").value="";
+                 document.getElementById("countryCard").style.display="none";
+               }
+                    function validateInput() {
+                        var searchKeyword = document.getElementById("searchKeyword").value;
+                        if(searchKeyword == "") {
+                            alert("Enter country name to proceed..");
+                        }
+                        else {
+                            countryName = document.getElementById("searchKeyword").value;
+                            url = encodeURI("https://restcountries.eu/rest/v2/name/"+countryName+"?fullText=true");
+                            
+                            fetch(url) // Call the fetch function passing the url of the API as a parameter
+                            .then((resp) => resp.json())                            
+                        .then(function(data) {
+                          console.log(data);
+    document.getElementById("cardName").innerHTML = data[0].name;
+    document.getElementById("countryFlag").src= data[0].flag;
+    document.getElementById("countryCard").style.display="block";
+    localStorage.setItem("jsonData",JSON.stringify(data));
+    
+})
+.catch(function() {
+    document.getElementById("countryCard").style.display="none";
+    alert("Oops!Country Not Found");
+});
+                        }
+                    }
+                    function redirectPage() {
+                      window.location.href("description.html");
+                    }
+                </script>
+</body>
+</html>

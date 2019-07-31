@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <head>
+<style>
+.center{
+    margin-left:40% ;
+    width:50%;
+}
+ul p{
+  padding-left: 2rem;
+  background-image: url(star.png);
+  background-position: 0 0;
+  background-size: 1.6rem 1.6rem;
+  background-repeat: no-repeat;
+}
+a:link, a:visited {
+  background-color: #f44336;
+  color: white;
+  padding: 14px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+</style>
+    </head>
+    <body onload="onLoad()">
+        <center>
+        <img id="image" style="width: 20%"></img>
+        </center>
+        <div class="center">
+        <br>
+       <ul>
+       <p>Name:<span id="name"></span></p>
+        <p>Region:<span id="reg"></span></p>
+        <p>SubRegion:<span id="subreg"></span></p>
+        <p>Capital:<span id="cap"></span></p>
+        <p>Numeric Code:<span id="code"></span></p>
+        <p>Currencies:<span id="currency"></span></p>
+        <p>Area:<span id="area"></span></p>
+        <p>population:<span id="pop"></span></p>
+        <p>Languages:<span id="lang"></span></p>
+        <p>RegionalBlocs:<span id="blocs"></span></p>
+        <p>TimeZones:<span id="time"></span></p>
+    </ul>
+    </div>
+        <script>
+            function onLoad() {
+                var data = localStorage.getItem('jsonData');
+                var jsonData = JSON.parse(data);
+                var x="";
+                for (i = 0; i < jsonData[0].languages.length; i++) {
+                 x += jsonData[0].languages[i].name ;
+                 if(i<(jsonData[0].languages.length)-1)
+                 x+=",";
+                }
+                
+document.getElementById("lang").innerHTML = x;
+document.getElementById("image").src = jsonData[0].flag;
+document.getElementById("area").innerHTML=jsonData[0].area;
+document.getElementById("time").innerHTML=jsonData[0].timezones[0];
+document.getElementById("code").innerHTML=jsonData[0].numericCode;
+try{
+    document.getElementById("blocs").innerHTML=jsonData[0].regionalBlocs[0].name;
+}
+catch(err){
+    document.getElementById("blocs").innerHTML="NOT AVAILABLE";
+
+}
+document.getElementById("currency").innerHTML=jsonData[0].currencies[0].name;
+               
+                document.getElementById("name").innerHTML=jsonData[0].name;
+                document.getElementById("reg").innerHTML=jsonData[0].region;
+                document.getElementById("subreg").innerHTML=jsonData[0].subregion;
+                document.getElementById("cap").innerHTML=jsonData[0].capital;
+                document.getElementById("pop").innerHTML=jsonData[0].population;
+              
+            }
+        </script>
+      <center> <a href="index.html">Back</a></center> 
+    </body>    
+</html>
